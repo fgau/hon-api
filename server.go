@@ -19,8 +19,6 @@ type Person struct {
     PixUrl    string   `json:"pixurl,omitempty"`
 }
 
-var people []Person
-
 func logHandler(fn http.HandlerFunc) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         t1 := time.Now()
@@ -69,14 +67,14 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
     result = r.FindAllString(src, -1)
     id_result := result[0]
 
-    var mars = new(Person)
-    mars.ID = id_result[24:len(id_result)-19]
-    mars.Nickname = nick_result[68:len(nick_result)-9]
-    mars.Gender = params["gender"]
-    mars.PixUrl = pix_result[40:len(pix_result)-15]
+    var people = new(Person)
+    people.ID = id_result[24:len(id_result)-19]
+    people.Nickname = nick_result[68:len(nick_result)-9]
+    people.Gender = params["gender"]
+    people.PixUrl = pix_result[40:len(pix_result)-15]
 
-    json.NewEncoder(w).Encode(mars)
-    mars = &Person{}
+    json.NewEncoder(w).Encode(people)
+    people = &Person{}
 
     if resp.StatusCode == http.StatusOK {
         log.Println(resp.Header)
