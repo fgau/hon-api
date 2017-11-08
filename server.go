@@ -1,8 +1,8 @@
 package main
 
 import (
-    "os"
-    "fmt"
+//    "os"
+//    "fmt"
     "log"
     "time"
     "regexp"
@@ -60,7 +60,7 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
     defer resp.Body.Close()
 
     htmlData, err := ioutil.ReadAll(resp.Body)
-    fmt.Println(os.Stdout, string(htmlData))
+    //fmt.Println(os.Stdout, string(htmlData))
 
     src := string(htmlData)
 
