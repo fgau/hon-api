@@ -19,6 +19,10 @@ type Person struct {
     PixUrl    string   `json:"pixurl,omitempty"`
 }
 
+type JsonError struct {
+    Error     string   `json:"error,omitempty"`
+}
+
 func logHandler(fn http.HandlerFunc) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         t1 := time.Now()
@@ -37,6 +41,11 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
         hon_url = "http://www.hotornot.de/index.php/?changegender=w"
     } else if params["gender"] == "male" {
         hon_url = "http://www.hotornot.de/index.php/?changegender=m"
+    } else {
+        var hon_err = new(JsonError)
+        hon_err.Error = "gender parameter must be 'female' or 'male'"
+        json.NewEncoder(w).Encode(hon_err)
+        return
     }
     req, err := http.NewRequest("GET", hon_url, nil)
     if err != nil {
