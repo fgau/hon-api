@@ -83,7 +83,6 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
     people.PixUrl = pix_result[40:len(pix_result)-15]
 
     json.NewEncoder(w).Encode(people)
-    people = &Person{}
 
     if resp.StatusCode == http.StatusOK {
         log.Println(resp.Header)
