@@ -92,7 +92,6 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
 }
 
 func RestEndpoint(w http.ResponseWriter, req *http.Request) {
-    log.Println("rest")
     var hon_err = new(JsonError)
     hon_err.Error = "not a valid api parameter"
     json.NewEncoder(w).Encode(hon_err)
@@ -102,7 +101,6 @@ func RestEndpoint(w http.ResponseWriter, req *http.Request) {
 func main() {
     router := mux.NewRouter()
     router.HandleFunc("/getperson/{gender}", logHandler(GetPersonEndpoint)).Methods("GET")
-    //router.HandleFunc("/", logHandler(RestEndpoint)).Methods("GET")
     router.PathPrefix("/").Handler(logHandler(RestEndpoint))
     log.Fatal(http.ListenAndServe(":8090", router))
 }
