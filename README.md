@@ -2,12 +2,12 @@
 
 **HTTP Request**
 
-```Get https://example.com/getperson/gender```
+```Get https://example.com/getperson/{gender}```
 
 Parameter **gender**:
 
-*female
-*male
+* **female**
+* **male**
 
 **HTTP Response**
 <pre>
