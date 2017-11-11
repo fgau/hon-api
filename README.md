@@ -1,8 +1,11 @@
 # API for hot or not website
 
 **HTTP Request**
+
 ```Get https://example.com/getperson/gender```
+
 Parameter **gender**:
+
 *female
 *male
 
