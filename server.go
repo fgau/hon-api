@@ -1,8 +1,8 @@
 package main
 
 import (
-//    "os"
-//    "fmt"
+    //"os"
+    //"fmt"
     "log"
     "time"
     "regexp"
@@ -32,6 +32,12 @@ func logHandler(fn http.HandlerFunc) http.HandlerFunc {
         log.Printf("[%s] %s %s %q %v\n",
             r.Method, r.Proto, r.RemoteAddr, r.URL.String(), t2.Sub(t1))
     }
+}
+
+func parseHon(strhon string, src string) string {
+    r, _ := regexp.Compile(strhon)
+    result := r.FindAllString(src, -1)
+    return result[0]
 }
 
 func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
@@ -64,17 +70,9 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
 
     src := string(htmlData)
 
-    r, _ := regexp.Compile("\\<div style=\"background:transparent url.*?no-repeat;\"\\>")
-    result := r.FindAllString(src, -1)
-    pix_result := result[0]
-
-    r, _ = regexp.Compile("\\<title\\>.*?\\</title\\>")
-    result = r.FindAllString(src, -1)
-    nick_result := result[0]
-
-    r, _ = regexp.Compile("\\<a href=\"/index.php.*?\" class=\"ButtonLink")
-    result = r.FindAllString(src, -1)
-    id_result := result[0]
+    pix_result := parseHon("\\<div style=\"background:transparent url.*?no-repeat;\"\\>", src)
+    nick_result := parseHon("\\<title\\>.*?\\</title\\>", src)
+    id_result := parseHon("\\<a href=\"/index.php.*?\" class=\"ButtonLink", src)
 
     var people = new(Person)
     people.ID = id_result[24:len(id_result)-19]
