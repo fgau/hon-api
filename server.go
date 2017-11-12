@@ -23,6 +23,11 @@ type JsonError struct {
     Error     string   `json:"error,omitempty"`
 }
 
+type JsonVote struct {
+    ID        string   `json:"id,omitempty"`
+    Vote      string   `json:"vote,omitempty"`
+}
+
 func logHandler(fn http.HandlerFunc) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         t1 := time.Now()
@@ -89,6 +94,19 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
     return
 }
 
+func PostHonResult(w http.ResponseWriter, req *http.Request) {
+    body, err := ioutil.ReadAll(req.Body)
+    if err != nil {
+        panic(err)
+    }
+    var v JsonVote
+    err = json.Unmarshal(body, &v)
+    if err != nil {
+        panic(err)
+    }
+    log.Println(v.ID, v.Vote)
+}
+
 func RestEndpoint(w http.ResponseWriter, req *http.Request) {
     var hon_err = new(JsonError)
     hon_err.Error = "not a valid api parameter"
@@ -99,6 +117,7 @@ func RestEndpoint(w http.ResponseWriter, req *http.Request) {
 func main() {
     router := mux.NewRouter()
     router.HandleFunc("/getperson/{gender}", logHandler(GetPersonEndpoint)).Methods("GET")
+    router.HandleFunc("/voteperson", logHandler(PostHonResult)).Methods("POST")
     router.PathPrefix("/").Handler(logHandler(RestEndpoint))
     log.Fatal(http.ListenAndServe(":8090", router))
 }
