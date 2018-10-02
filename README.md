@@ -2,7 +2,7 @@
 
 **HTTP Request**
 
-```Get https://example.com/getperson/{gender}```
+```Get https://localhost:8090/getperson/{gender}```
 
 Parameter **gender**:
 
@@ -21,11 +21,15 @@ Parameter **gender**:
 
 </pre>
 
+Curl Example:
+
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8090/getperson/female
+
 ---
 
 **HTTP Post Request**
 
-```Post https://example.com/voteperson```
+```Post https://localhost:8090/voteperson```
 
 Json Payload:
 
@@ -41,7 +45,7 @@ Json Payload:
 
 Curl Example:
 
-curl -X POST -H "Content-Type: application/json" -d '{"ID":"0815","Nickname":"BLNMausi","Vote":"0"}' --insecure  https://example.com/voteperson
+curl -X POST -H "Content-Type: application/json" -d '{"ID":"0815","Nickname":"BLNMausi","Vote":"0"}' --insecure  https://localhost:8090/voteperson
 
 **HTTP Response**
 <pre>
