@@ -1,8 +1,6 @@
 package main
 
 import (
-	//"os"
-	//"fmt"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"io/ioutil"
@@ -37,7 +35,6 @@ func logHandler(fn http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		t1 := time.Now()
 		w.Header().Set("Content-Type", "application/json")
-		//w.Header().Set("mySID", "secret")
 		fn.ServeHTTP(w, r)
 		t2 := time.Now()
 		log.Printf("[%s] %s %s %q %v\n",
@@ -76,13 +73,9 @@ func GetPersonEndpoint(w http.ResponseWriter, req *http.Request) {
 		log.Fatal(err.Error())
 	}
 
-	cookies := req.Cookies()
-	log.Println(cookies)
-
 	defer resp.Body.Close()
 
 	htmlData, err := ioutil.ReadAll(resp.Body)
-	//fmt.Println(os.Stdout, string(htmlData))
 
 	src := string(htmlData)
 
